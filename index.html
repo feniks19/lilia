@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,8 +9,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <title>Laundry Space – Available Now</title>
 <!-- Vercel Web Analytics -->
-<script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
-
+<script defer src="https://vercel-insights.com"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;background:#fafafa;color:#222;padding:1.5rem;max-width:1200px;margin:auto;line-height:1.5}
@@ -20,7 +18,7 @@ h1{font-weight:500;font-size:2rem;margin-bottom:.25rem}
 .lang{text-align:right;margin-bottom:1rem;font-weight:600}
 .lang a{color:#0070f3;text-decoration:none;margin-left:.7rem}
 .photo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem}
-.photo-grid figure{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 12px #0001;transition:transform .2s}
+.photo-grid figure{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 12px #0001;transition:transform .2s;cursor:pointer}
 .photo-grid figure:hover{transform:scale(1.01)}
 .photo-grid img{width:100%;height:200px;object-fit:cover;object-position:top center;display:block;background:#eee}
 .photo-grid figcaption{padding:.75rem 1rem 1rem;font-size:.95rem;color:#333;text-align:center;border-top:1px solid #f0f0f0}
@@ -36,25 +34,26 @@ h1{font-size:1.5rem}
 }
 </style>
 </head>
-
 <body>
-
 <nav class="lang"><a href="index.html">ENGLISH</a><a href="index-es.html">ESPAÑOL</a><a href="index-vi.html">TIẾNG VIỆT</a></nav>
-
 <h1>📸 4-Bedroom House for Rent</h1>
 <div class="subhead">2 bathrooms · spacious living room and dining room · private parking</div>
 
 <div class="photo-grid" id="photoGrid"></div>
 
+<!-- Merged Full Size Modal View Component -->
+<div id="lightbox" style="display:none; position:fixed; z-index:1000; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); justify-content:center; align-items:center; cursor:zoom-out;">
+    <span style="position:absolute; top:20px; right:30px; color:#fff; font-size:35px; font-weight:bold; cursor:pointer;">&times;</span>
+    <img id="lightboxImg" src="" alt="Full View" style="max-width:95%; max-height:95%; object-fit:contain; border-radius:4px; box-shadow:0 4px 20px rgba(0,0,0,0.5);">
+</div>
+
 <div class="contact">
 <div class="action-buttons">
 <a href="tel:+16577791076">📞 Call Now</a>
-<a href="sms:+17142224364" class="text-link">✉️ Send a Text</a>
+<a href="sms:+17142224364" class="text-link">✉%EF%B8%8F Send a Text</a>
 </div>
 </div>
-
-<script data-goatcounter="https://YOURCODE.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
-
+<script data-goatcounter="https://goatcounter.com" async src="//gc.zgo.at/count.js"></script>
 <script>
 const captions=[
 'Spacious driveway with private parking for 4 cars',
@@ -68,25 +67,35 @@ const captions=[
 'Quiet hours – respectful neighbors',
 'Easy access and secure entry'
 ];
-
 const grid=document.getElementById('photoGrid');
+const lightbox=document.getElementById('lightbox');
+const lightboxImg=document.getElementById('lightboxImg');
 
 captions.forEach((caption,i)=>{
-  const figure=document.createElement('figure');
-  const img=document.createElement('img');
-  img.src=`images/R${i+1}.jpg`;
-  img.alt=caption;
-  img.loading='lazy';
-  img.onerror=()=>img.style.display='none';
-  figure.append(img);
+const figure=document.createElement('figure');
+const img=document.createElement('img');
+img.src=`images/R${i+1}.jpg`;
+img.alt=caption;
+img.loading='lazy';
+img.onerror=()=>img.style.display='none';
+figure.append(img);
+const figcap=document.createElement('figcaption');
+figcap.textContent=caption;
+figure.append(figcap);
 
-  const figcap=document.createElement('figcaption');
-  figcap.textContent=caption;
-  figure.append(figcap);
-  grid.append(figure);
+// Open on Double Click
+figure.addEventListener('dblclick',()=>{
+lightboxImg.src=img.src;
+lightbox.style.display='flex';
+});
+
+grid.append(figure);
+});
+
+// Close Overlay on Click
+lightbox.addEventListener('click',()=>{
+lightbox.style.display='none';
 });
 </script>
-
 </body>
 </html>
-```
